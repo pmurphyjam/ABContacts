@@ -17,7 +17,7 @@
 {
     if (self = [super init])
         record =  CFRetain(aRecord);
-
+    
 	return self;
 }
 
@@ -196,8 +196,8 @@
     if (status)
     {
         status = ABAddressBookSave(addressBook,  &cfError);
-        CFRelease(addressBook);
     }
+    CFRelease(addressBook);
 	return status;
 }
 

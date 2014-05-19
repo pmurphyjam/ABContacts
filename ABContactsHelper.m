@@ -5,7 +5,6 @@
 //  Created by Pat Murphy on 4/13/11.
 //  Copyright (c) 2013 Fitamatic All rights reserved.
 //
-
 #import "ABContactsHelper.h"
 
 @implementation ABContactsHelper
@@ -35,7 +34,9 @@
         // iOS 5 or older
         accessGranted = YES;
     }
-    CFRelease(addressBookRef);
+    if(!(addressBookRef == NULL))
+        CFRelease(addressBookRef);
+    
     return accessGranted;
 }
 
@@ -87,7 +88,8 @@
             intValue += [phoneArray count];
             intValue += [emailArray count];
         }
-        CFRelease(addressBookRef);
+        if(!(addressBookRef == NULL))
+            CFRelease(addressBookRef);
     }
     return intValue;
 }
@@ -114,7 +116,10 @@
         {
             CFDataRef imageDataRef = ABPersonCopyImageData(person);
             if (!(imageDataRef == NULL))
+            {
                 ncount++;
+                CFRelease(imageDataRef);
+            }
         }
     }
     CFRelease(addressBookRef);
@@ -133,7 +138,7 @@
         BOOL contactImageHasData = ABPersonHasImageData(person);
         if(!contactImageHasData)
         {
-                ncount++;
+            ncount++;
         }
     }
     CFRelease(addressBookRef);

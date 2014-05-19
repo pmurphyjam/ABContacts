@@ -9,8 +9,8 @@
 #import "ABGroup.h"
 #import "ABContactsHelper.h"
 
-
 @implementation ABGroup
+
 @synthesize record;
 
 - (id) initWithRecord: (ABRecordRef) aRecord
@@ -34,6 +34,7 @@
 {
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 	ABRecordRef grouprec = ABAddressBookGetGroupWithRecordID(addressBook, recordID);
+    CFRelease(addressBook);
 	ABGroup *group = [self groupWithRecord:grouprec];
 	return group;
 }
@@ -54,9 +55,8 @@
     if (status)
     {
         status = ABAddressBookSave(addressBook,  &cfError);
-        CFRelease(addressBook);
     }
-    
+    CFRelease(addressBook);
 	return status;
 }
 
@@ -68,7 +68,7 @@
 #pragma mark management
 - (NSArray *) members
 {
-	NSArray *contacts = (__bridge NSArray *)ABGroupCopyArrayOfAllMembers(self.record);
+    NSArray *contacts = CFBridgingRelease(ABGroupCopyArrayOfAllMembers(self.record));
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:contacts.count];
 	for (id contact in contacts)
 		[array addObject:[ABContact contactWithRecord:(ABRecordRef)contact]];
@@ -78,7 +78,7 @@
 // kABPersonSortByFirstName = 0, kABPersonSortByLastName  = 1
 - (NSArray *) membersWithSorting: (ABPersonSortOrdering) ordering
 {
-	NSArray *contacts = (__bridge NSArray *)ABGroupCopyArrayOfAllMembersWithSortOrdering(self.record, ordering);
+    NSArray *contacts = CFBridgingRelease(ABGroupCopyArrayOfAllMembersWithSortOrdering(self.record, ordering));
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:contacts.count];
 	for (id contact in contacts)
 		[array addObject:[ABContact contactWithRecord:(ABRecordRef)contact]];
@@ -101,12 +101,12 @@
 
 - (NSString *) getRecordString:(ABPropertyID) anID
 {
-	return (__bridge NSString *) ABRecordCopyValue(record, anID);
+    return CFBridgingRelease(ABRecordCopyValue(record, anID));
 }
 
 - (NSString *) name
 {
-	NSString *string = (__bridge NSString *)ABRecordCopyCompositeName(record);
+    NSString *string = CFBridgingRelease(ABRecordCopyCompositeName(record));
 	return string;
 }
 
@@ -117,4 +117,5 @@
 	BOOL success = ABRecordSetValue(record, kABGroupNameProperty, stringRef, &error);
 	if (!success) NSLog(@"Error: %@", [(__bridge NSError *)error localizedDescription]);
 }
+
 @end
