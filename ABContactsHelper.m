@@ -371,7 +371,7 @@
         NSDictionary *randomContactDic = [self randomContact];
         [contact setFirstname:[randomContactDic objectForKey:@"FirstName"]];
         [contact setLastname:[randomContactDic objectForKey:@"LastName"]];
-        //Use the MiddleName to delete these contacts later using deleteAllContacts
+        //Use the MiddleName to delete these contacts later using deleteRandomContacts
         [contact setMiddlename:[randomContactDic objectForKey:@"MiddleName"]];
         NSMutableArray *phoneDicArray = [[NSMutableArray alloc] init];
         NSDictionary *phoneMobileDic = [NSDictionary dictionaryWithObjectsAndKeys:[randomContactDic objectForKey:@"Phone"],@"value",kABPersonPhoneIPhoneLabel,@"label",nil];
