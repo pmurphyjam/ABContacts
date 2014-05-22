@@ -51,8 +51,8 @@
 + (NSArray *) groupsMatchingName: (NSString *) fname;
 + (BOOL) matchingNameWithGroups: (NSString *) fname andGroups:(NSArray*)groups;
 
-+(void)createRandomContacts;
-+(void)deleteAllContacts;
++(void)createRandomContacts:(int)maxContacts;
++(void)deleteRandomContacts;
 
 @end
 

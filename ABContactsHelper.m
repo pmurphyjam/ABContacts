@@ -361,11 +361,10 @@
     return randomNameDic;
 }
 
-+(void)createRandomContacts
++(void)createRandomContacts:(int)maxContacts
 {
     NSArray *contacts = [ABContactsHelper contacts];
     NSLog(@"ABContactsHelper : CreateRandomContacts[%d] ",[contacts count]);
-    int maxContacts = 1000;
     for (int index = 0; index<maxContacts; index++)
     {
         ABContact *contact = [ABContact contact];
@@ -391,7 +390,7 @@
     }
 }
 
-+(void)deleteAllContacts
++(void)deleteRandomContacts
 {
     NSArray *contacts = [ABContactsHelper contacts];
     NSError *error = nil;
