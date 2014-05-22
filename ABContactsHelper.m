@@ -357,7 +357,7 @@
     NSString *lastNameStr = [NSString stringWithFormat:@"%@%@",firstLetter,[lastNameDic objectForKey:randomLastNameKey]];
     NSString *randomPhone = [self randomPhoneNumber];
     NSString *randomEmail = [NSString stringWithFormat:@"%@.%@@appredeem.com",[firstNameDic objectForKey:randomFirstNameKey],lastNameStr];
-    NSDictionary *randomNameDic = [NSDictionary dictionaryWithObjectsAndKeys:[firstNameDic objectForKey:randomFirstNameKey],@"FirstName",lastNameStr,@"LastName",randomPhone,@"Phone",randomEmail,@"Email",nil];
+    NSDictionary *randomNameDic = [NSDictionary dictionaryWithObjectsAndKeys:[firstNameDic objectForKey:randomFirstNameKey],@"FirstName",lastNameStr,@"LastName",randomPhone,@"Phone",randomEmail,@"Email",@"Test",@"MiddleName",nil];
     return randomNameDic;
 }
 
@@ -372,6 +372,8 @@
         NSDictionary *randomContactDic = [self randomContact];
         [contact setFirstname:[randomContactDic objectForKey:@"FirstName"]];
         [contact setLastname:[randomContactDic objectForKey:@"LastName"]];
+        //Use the MiddleName to delete these contacts later using deleteAllContacts
+        [contact setMiddlename:[randomContactDic objectForKey:@"MiddleName"]];
         NSMutableArray *phoneDicArray = [[NSMutableArray alloc] init];
         NSDictionary *phoneMobileDic = [NSDictionary dictionaryWithObjectsAndKeys:[randomContactDic objectForKey:@"Phone"],@"value",kABPersonPhoneIPhoneLabel,@"label",nil];
         [phoneDicArray addObject:phoneMobileDic];
@@ -394,7 +396,14 @@
     NSArray *contacts = [ABContactsHelper contacts];
     NSError *error = nil;
     for (ABContact *contact in contacts)
-        [contact removeSelfFromAddressBook:&error];
+    {
+        NSString *middleName = [contact middlename];
+        if([middleName length] > 0)
+        {
+            if([middleName isEqualToString:@"Test"])
+                [contact removeSelfFromAddressBook:&error];
+        }
+    }
 }
 
 @end
