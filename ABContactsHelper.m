@@ -356,7 +356,7 @@
     NSString *randomLastNameKey = [NSString stringWithFormat:@"LastName_%d",randomLastNameNum];
     NSString *lastNameStr = [NSString stringWithFormat:@"%@%@",firstLetter,[lastNameDic objectForKey:randomLastNameKey]];
     NSString *randomPhone = [self randomPhoneNumber];
-    NSString *randomEmail = [NSString stringWithFormat:@"%@.%@@appredeem.com",[firstNameDic objectForKey:randomFirstNameKey],lastNameStr];
+    NSString *randomEmail = [NSString stringWithFormat:@"%@.%@@company.com",[firstNameDic objectForKey:randomFirstNameKey],lastNameStr];
     NSDictionary *randomNameDic = [NSDictionary dictionaryWithObjectsAndKeys:[firstNameDic objectForKey:randomFirstNameKey],@"FirstName",lastNameStr,@"LastName",randomPhone,@"Phone",randomEmail,@"Email",@"Test",@"MiddleName",nil];
     return randomNameDic;
 }
