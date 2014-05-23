@@ -175,7 +175,7 @@
 // Sorting
 + (BOOL) firstNameSorting
 {
-	return (ABPersonGetCompositeNameFormat() == kABPersonCompositeNameFormatFirstNameFirst);
+	return (ABPersonGetCompositeNameFormatForRecord == kABPersonCompositeNameFormatFirstNameFirst);
 }
 
 #pragma mark Contact Management
